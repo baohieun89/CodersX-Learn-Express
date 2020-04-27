@@ -1,6 +1,14 @@
-h1 Create User
-form(action="/users/create", method="POST")
-	label Name
-	input(type="text", name="name")
-	input(type="text", name="age")
-	button Create
+extends ../layouts/common
+block content
+	h1 Create a New User
+	if errors
+		each error in errors
+			.alert.alert-danger=error
+	form(action="/users/create", method="POST")
+		.form-group
+			label.ml-2(for="name") Name
+			input#name.form-control.ml-2(type="text", name="name", value = values ? values.name : "")
+		.form-group
+			label.ml-2(for="age") Age
+			input#age.form-control.ml-2(type="text", name="age", value = values ? values.age : "")
+		button.btn.btn-primary.ml-2 Create

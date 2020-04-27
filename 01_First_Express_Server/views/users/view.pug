@@ -1,5 +1,10 @@
-h1 view user
-p
-	b Name
-	span= user.name
-	
+extends ../layouts/common
+block content
+	h1 view user
+	p
+		b Name
+		span= user.name
+		b Age:
+		span= user.age
+
+
