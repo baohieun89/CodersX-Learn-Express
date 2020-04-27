@@ -9,7 +9,16 @@ module.exports = {
       errors.push('Age is required');
       console.log(req.body.name.length);
     }
-      if(req.body.name.length > 30){
+    if(!req.body.email){
+      errors.push('Email is required');
+    }
+    if(!req.body.password){
+      errors.push('Password is required');
+    }
+    if(req.body.password.length < 6){
+      errors.push('Password is required');
+    }
+    if(req.body.name.length > 30){
       errors.push('Name is too long');
     }
     if(errors.length){
