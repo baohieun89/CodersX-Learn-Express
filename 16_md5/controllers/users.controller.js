@@ -33,6 +33,7 @@ module.exports ={
    req.body.password = hash;
    db.get('users').push(req.body).write();
    res.redirect('/users');
+   console.log(res.locals);
   },
 
   view: (req, res) =>{

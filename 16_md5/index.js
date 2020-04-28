@@ -20,7 +20,7 @@ var authMiddle = require('./middlewares/auth.middleware')
 
 
 app.use(express.static('public'));
-app.use(cookieParser());
+app.use(cookieParser('nbhdtthnbanan16283110'));
 app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(bodyParser.json()) // for parsing application/json
@@ -29,9 +29,10 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 
 
 // https://expressjs.com/en/starter/basic-routing.html
-app.get('/',cookieCount, (request, response) => {
+app.get('/',authMiddle.requireAuth,cookieCount, (request, response) => {
   response.cookie("CodersX",123);
   response.render('index');
+  // console.log('locals: ' +  response.locals)
 });
 var countCookie=0;
 function cookieCount(req,res,next){

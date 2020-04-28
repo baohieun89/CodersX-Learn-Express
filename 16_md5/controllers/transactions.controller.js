@@ -6,7 +6,7 @@ module.exports = {
   index: (req, res) => {
       res.render('trans/index', {
       transactions: db.get('transactions').value(),
-      user: db.get('users').find({id: req.cookies.userID}).value()
+      user: db.get('users').find({id: req.signedCookies.userID}).value()
       
     }) 
   },

@@ -37,7 +37,7 @@ module.exports= {
 		if(checkPassword){
 			loginCount = 0
 			db.get('users').find({email :email}).assign({wrongLoginCount:0}).write();
-			res.cookie('userID', user.id);
+			res.cookie('userID', user.id,{signed:true});
 			res.redirect('/')
 		}else{
 			console.log('sai passs')

@@ -28,6 +28,7 @@ module.exports = {
       });
       return
     }
+    res.locals.user = true;
     next();
   }
 }

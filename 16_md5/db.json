@@ -51,7 +51,7 @@
       "email": "baonhi@gmail.com",
       "password": "$2b$10$nkYQeOi6cAx6/G5HnDrzme2ezJu8PKTkvJUWPUiJsI9rb4esmLCBO",
       "isAdmin": false,
-      "wrongLoginCount": 2
+      "wrongLoginCount": 0
     },
     {
       "name": "Nguyễn Bảo Hiếu",
@@ -59,6 +59,14 @@
       "email": "hieunbnbnb@gmail.com",
       "password": "$2b$10$xE2ytBa8kZ4J6jtFCc5zz.YfH7UyLkZ.zZAf.DwlEMvLCK73Mbbd2",
       "id": "GymfK6yP5",
+      "wrongLoginCount": 0
+    },
+    {
+      "name": "abc xyz ",
+      "age": "29",
+      "email": "abczxyasda@gmail.com",
+      "password": "$2b$10$Utx5vxkyQr3zu7TwPphG6.WvV7PyUnSud3f2jZaY0rsQPr//B.yN6",
+      "id": "VfcGWm_3c",
       "wrongLoginCount": 0
     }
   ],
