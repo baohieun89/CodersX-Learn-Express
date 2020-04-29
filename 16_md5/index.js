@@ -3,6 +3,8 @@
 
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
+require('dotenv').config()
+console.log(process.env.SESSION_SECRET)
 const express = require('express');
 const app = express();
 
