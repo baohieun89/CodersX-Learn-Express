@@ -16,6 +16,7 @@ const port = 3000;
 var listRoute = require('./routes/list.route');
 var userRoute = require('./routes/user.route');
 var transRoute = require('./routes/transaction.route')
+var productsRoute = require('./routes/products.route')
 var authRoute = require('./routes/auth.route')
 var authMiddle = require('./middlewares/auth.middleware')
 
@@ -44,6 +45,7 @@ function cookieCount(req,res,next){
 }
 app.use('/auth', authRoute);
 app.use('/list',authMiddle.requireAuth, listRoute);
+app.use('/products',authMiddle.requireAuth, productsRoute);
 app.use('/users',authMiddle.requireAuth, userRoute);
 app.use('/transactions',authMiddle.requireAuth, transRoute);
 // listen for requests :)
