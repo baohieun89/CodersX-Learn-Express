@@ -21,6 +21,21 @@ block content
 					a.btn.btn-light(href="/users/" + user.id) View
 					a.btn.btn-light(href="/users/edit/" + user.id) Edit
 					a.btn.btn-light(href="/users/" + user.id + "/delete") Delete
+	nav(aria-label='Page navigation example')
+		 
+		ul.pagination.justify-content-center
+			li.page-item
+				a.page-link(href='#', tabindex='-1', aria-disabled='true') Previous
+			-var page = 0
+			while page < pages
+				li.page-item
+					a.page-link(href='/users?page='+ (++page))= page
+				
+
+			
+			li.page-item
+				a.page-link(href='#') Next
+
 
 
 
