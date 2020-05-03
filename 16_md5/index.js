@@ -13,17 +13,21 @@ var shortid = require('shortid');
 var cookieParser = require('cookie-parser')
 const port = 3000;
 
-var listRoute = require('./routes/list.route');
+var booksRoute = require('./routes/books.route');
 var userRoute = require('./routes/user.route');
 var transRoute = require('./routes/transaction.route')
 var productsRoute = require('./routes/products.route')
 var authRoute = require('./routes/auth.route')
+var cartRoute = require('./routes/cart.route')
+
 var authMiddle = require('./middlewares/auth.middleware')
+var sessionMiddle = require('./middlewares/session.middleware')
 
 
 
 app.use(express.static('public'));
-app.use(cookieParser('nbhdtthnbanan16283110'));
+app.use(cookieParser(process.env.SESSION_SECRET));
+app.use(sessionMiddle);
 app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(bodyParser.json()) // for parsing application/json
@@ -44,10 +48,11 @@ function cookieCount(req,res,next){
   next();
 }
 app.use('/auth', authRoute);
-app.use('/list',authMiddle.requireAuth, listRoute);
+app.use('/books',authMiddle.requireAuth, booksRoute);
 app.use('/products',authMiddle.requireAuth, productsRoute);
 app.use('/users',authMiddle.requireAuth, userRoute);
 app.use('/transactions',authMiddle.requireAuth, transRoute);
+app.use('/cart', cartRoute);
 // listen for requests :)
 app.listen(port, () => {
   console.log("Server listening on port " + port);

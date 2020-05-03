@@ -14,4 +14,4 @@ block content
 						p.card-text= product.description
 						.card-footer.text-muted.d-flex
 							a.nav-link.disabled(href='#', aria-disabled='true')= product.price + '$'
-							a.btn.btn-primary.ml-auto(href='#' + product.id) Add to cart
+							a.btn.btn-primary.ml-auto(href='cart/add/' + product.id) Add to cart

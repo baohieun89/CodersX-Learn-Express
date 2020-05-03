@@ -21,9 +21,13 @@ html
 						li.nav-item
 							a.nav-link(href='/products') Products
 						li.nav-item
+							a.nav-link(href='/cart') Cart
+								span.ml-1.badge.badge-primary 10
+						li.nav-item
 							a.nav-link(href='/auth/login') Login
 				if user
-					p= user.name
-				
+					a.nav-link(href="/users/profile")= user.name
+
+
 		.container.pt-5
 		block content

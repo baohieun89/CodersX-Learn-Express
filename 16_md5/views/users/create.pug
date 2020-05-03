@@ -4,7 +4,7 @@ block content
 	if errors
 		each error in errors
 			.alert.alert-danger=error
-	form(action="/users/create", method="POST")
+	form(action="/users/create", method="POST",enctype="multipart/form-data")
 		.form-group
 			label.ml-2(for="name") Name
 			input#name.form-control.ml-2(type="text", name="name", value = values ? values.name : "")
@@ -17,6 +17,9 @@ block content
 		.form-group
 			label.ml-2(for="password") Password
 			input#password.form-control.ml-2(type="password", name="password", value = values ? values.password : "")
+		.form-group
+			label.ml-2(for="avatar") Avatar
+			input#avatar.form-control-file.ml-2(type="file", name="avatar")
 		button.btn.btn-primary.ml-2 Create
 
 

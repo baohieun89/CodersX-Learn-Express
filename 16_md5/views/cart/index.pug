@@ -1,0 +1,13 @@
+extends ../layouts/common
+block content
+  h1 Cart
+
+  table.table
+    tr
+      th Product
+      th Qty
+    each val, key in cart
+      tr
+        td= key
+        td= val
+

@@ -10,11 +10,14 @@ block content
 		button Search
 	table.table
 		tr
+			th Avatar
 			th Name
 			th Age
 			th.text-center Actions
 		each user in users
 			tr
+				td
+					img(src=user.avatar, width="48")
 				td= user.name
 				td= user.age
 				td.text-center
@@ -22,7 +25,7 @@ block content
 					a.btn.btn-light(href="/users/edit/" + user.id) Edit
 					a.btn.btn-light(href="/users/" + user.id + "/delete") Delete
 	nav(aria-label='Page navigation example')
-		 
+
 		ul.pagination.justify-content-center
 			li.page-item
 				a.page-link(href='#', tabindex='-1', aria-disabled='true') Previous
@@ -30,9 +33,9 @@ block content
 			while page < pages
 				li.page-item
 					a.page-link(href='/users?page='+ (++page))= page
-				
 
-			
+
+
 			li.page-item
 				a.page-link(href='#') Next
 
