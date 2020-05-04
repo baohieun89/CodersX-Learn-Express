@@ -1,16 +1,17 @@
 extends ../layouts/common
 block content
-  h1 BOOKS
-  h3 Add a new book
-  .d-flex.align-items-center
-    form(action="/list/add", method="POST")
-      label Title: &nbsp;
-      input(type="text", name="title")
-      span &nbsp;&nbsp
-      label Desc: &nbsp;
-      input(type="text", name="desc")
-      button Add
-    a.btn.btn-dark.ml-auto(href="/books/cart") Cart
+  h1 
+    span.mr-3 Books
+    a.btn.btn-primary(href="/books/add") Add New Book
+    //- .d-flex.align-items-center
+    //- form(action="/list/add", method="POST")
+    //-   label Title:
+    //-   input(type="text", name="title")
+      
+    //-   label Desc: 
+    //-   input(type="text", name="desc")
+    //-   button Add
+    a.btn.btn-dark.ml-4(href="/books/cart") Cart
 
   table.table
     thead
@@ -25,8 +26,9 @@ block content
       each book in books
         tr
           th(scope='row')= ++row
-          td Book Cover
+          td
+            img(src=book.coverUrl, height="150")
           td= book.title
           td= book.desc
           td
-            a(href='#') Add to cart
+            a(href='/books/add-to-cart/' + book.id) Add to cart
