@@ -1,0 +1,34 @@
+extends ../layouts/common
+block content
+  h1 
+    span.mr-3 Books
+    a.btn.btn-primary(href="/books/add") Add New Book
+    //- .d-flex.align-items-center
+    //- form(action="/list/add", method="POST")
+    //-   label Title:
+    //-   input(type="text", name="title")
+      
+    //-   label Desc: 
+    //-   input(type="text", name="desc")
+    //-   button Add
+    a.btn.btn-dark.ml-4(href="/books/cart") Cart
+
+  table.table
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Cover
+        th(scope='col') Title
+        th(scope='col') Description
+        th
+    tbody
+      -var row = 0
+      each book in books
+        tr
+          th(scope='row')= ++row
+          td
+            img(src=book.coverUrl, height="150")
+          td= book.title
+          td= book.desc
+          td
+            a(href='/books/add-to-cart/' + book.id) Add to cart

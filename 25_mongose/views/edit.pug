@@ -1,0 +1,7 @@
+- var action = "/list/edit/" + book.id
+h1 edit title book #{book.title}
+form(action=action, method = 'POST')
+  label= 'Old: '+ book.title + ' - '
+  label New:
+  input(type="text", name = 'title')
+  button Edit

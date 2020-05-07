@@ -1,0 +1,30 @@
+extends ../layouts/common
+block content
+  
+  h1
+    span.mr-3 Transactions
+    a.btn.btn-primary(href="/transactions/create") Create a new transaction
+  table.table
+    tr
+      th UserID
+      th BookID
+      th.text-center Actions
+    each transaction in transactions
+      tr
+        if user.isAdmin === false
+          if transaction.userID === user.id
+            td= transaction.userID
+            td= transaction.bookID
+            td.text-center
+              if transaction.isComplete
+                span Completed
+              else
+                a(href='/transactions/' + transaction.id + '/complete') Complete
+        else
+          td= transaction.userID
+            td= transaction.bookID
+            td.text-center
+              if transaction.isComplete
+                span Completed
+              else
+                a(href='/transactions/' + transaction.id + '/complete') Complete

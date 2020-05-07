@@ -1,0 +1,14 @@
+extends ../layouts/common
+block content
+	h1 Cart Book
+	.d-flex
+		if bookCart
+			table.table
+				tr
+					th Product
+					th Qty
+				each val, key in bookCart
+					tr
+						td= key
+						td= val
+	a.btn.btn-dark.col-6(href="/books/cart/lend") LEND

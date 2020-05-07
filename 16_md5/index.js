@@ -8,6 +8,8 @@ console.log(process.env.SESSION_SECRET)
 const express = require('express');
 const app = express();
 
+var mongoose = require('mongoose');
+mongoose.connect('process.env.MONGO_LOCAL_URL');
 var bodyParser = require('body-parser');
 var shortid = require('shortid');
 var cookieParser = require('cookie-parser')

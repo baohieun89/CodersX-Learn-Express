@@ -1,0 +1,11 @@
+extends ../layouts/common
+block content
+  h1 User Info
+  p
+    b Name: &nbsp;
+    span= user.name
+    br
+    b Age: &nbsp
+    span= user.age
+    br
+    a.btn.btn-primary(href="/users") Back to Users List
