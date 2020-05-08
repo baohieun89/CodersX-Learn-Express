@@ -21,6 +21,8 @@ var transRoute = require('./routes/transaction.route')
 var productsRoute = require('./routes/products.route')
 var authRoute = require('./routes/auth.route')
 var cartRoute = require('./routes/cart.route')
+var apiProductsRoute = require('./api/routes/products.route')
+var apiLogin = require('./api/routes/login.route')
 
 var authMiddle = require('./middlewares/auth.middleware')
 var sessionMiddle = require('./middlewares/session.middleware')
@@ -55,6 +57,8 @@ app.use('/products',authMiddle.requireAuth, productsRoute);
 app.use('/users',authMiddle.requireAuth, userRoute);
 app.use('/transactions',authMiddle.requireAuth, transRoute);
 app.use('/cart', cartRoute);
+app.use('/api/products', apiProductsRoute);
+app.use('/api/login', apiLogin);
 // listen for requests :)
 app.listen(port, () => {
   console.log("Server listening on port " + port);
