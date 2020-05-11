@@ -1,5 +1,6 @@
 var md5 = require('md5');
 var bcrypt = require('bcrypt');
+var User = require('../models/user.model')
 
 var db = require('../db');
 
@@ -11,11 +12,13 @@ module.exports= {
 		res.render('auth/login')
 	},
 
-	postLogin: (req, res) => {
+	postLogin: async (req, res) => {
 		var email = req.body.email;
 		var password = req.body.password;
-		var user= db.get('users').find({email: email}).value();
-		if (!user) {
+		var user = await User.find({email: email});
+
+		//var user= db.get('users').find({email: email}).value();
+		if (user.length === 0) {
 			res.render('auth/login',{
 				errors : [
 				'User does not exists!'
@@ -24,7 +27,8 @@ module.exports= {
 			});
 			return;
 		}
-		if(user.wrongLoginCount >= 4){
+		loginCount = user[0]._doc.wrongLoginCount;
+		if(user[0]._doc.wrongLoginCount >= 4){
 			res.render('auth/login',{
 				errors : [
 				'You have logged in wrong too many times. Please contact admins to reset >"<'
@@ -33,17 +37,26 @@ module.exports= {
 			});
 			return;
 		}
-		var checkPassword = bcrypt.compareSync(password, user.password)
+		var checkPassword = bcrypt.compareSync(password, user[0]._doc.password);
+
 		if(checkPassword){
 			loginCount = 0
-			db.get('users').find({email :email}).assign({wrongLoginCount:0}).write();
-			res.cookie('userID', user.id,{signed:true});
+			await User.updateOne(
+															{ _id : user[0]._doc._id },
+															{wrongLoginCount : loginCount}
+			);
+
+			res.cookie('userID', user[0]._doc._id,{signed:true});
 			res.redirect('/')
 		}else{
 			console.log('sai passs')
 			loginCount = (loginCount || 0) + 1;
 			console.log(loginCount);
-			db.get('users').find({email :email}).assign({wrongLoginCount:loginCount}).write();
+			//db.get('users').find({email :email}).assign({wrongLoginCount:loginCount}).write();
+			await User.updateOne(
+															{ _id : user[0]._doc._id },
+															{wrongLoginCount : loginCount}
+			);
 
 			res.render('auth/login',{
 				errors : [

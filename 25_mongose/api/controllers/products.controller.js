@@ -19,10 +19,10 @@ module.exports.viewProduct = async (req, res, next) => {
 }
 module.exports.delete = async (req, res, next) => {
 	var id = req.params.id;
-	
+
 	var products = await Product.deleteOne({_id: id});
 	res.json(products)
-	
+
 }
 
 module.exports.update = async (req, res, next) => {
@@ -33,5 +33,5 @@ module.exports.update = async (req, res, next) => {
 															req.body
 	);
 	res.json(product);
-	
+
 }

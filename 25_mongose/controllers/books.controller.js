@@ -1,12 +1,15 @@
 var db = require('../db');
 var shortid = require('shortid');
 var cloudinary = require('cloudinary').v2;
+var Book = require('../models/book.model');
+var Session = require('../models/session.model');
 
 module.exports = {
 
-  index: (req, res) => {
+  index: async (req, res) => {
+    var books = await Book.find();
     res.render('books/index',{
-    books: db.get('books').value()
+    books: books
     });
   },
 
@@ -15,7 +18,7 @@ module.exports = {
       book: db.get('books').value()
 
     });
-   
+
   },
 
   postAdd: (req, res) =>{
@@ -28,17 +31,24 @@ module.exports = {
       db.get('books').push(req.body).write();
 
     });
-    
+
     res.redirect('/books')
   },
 
-  addToCart: (req, res) =>{
+  addToCart: async (req, res) =>{
     var bookID = req.params.bookID;
     var sessionID = req.signedCookies.sessionID;
     if(!sessionID){
       res.redirect('/books');
       return;
     }
+    //var session = await Session.find()
+    var session = await Session.find({id: req.signedCookies.sessionID})
+    var bookCart = session[0]._doc.bookCart;
+    session[0]._doc.bookCart[bookID] = (session[0]._doc.bookCart[bookID] || 0) + 1;
+
+    await Session.updateOne({ id: req.signedCookies.sessionID },session[0]);
+    //var update = await Session.updateOne({ id: req.signedCookies.sessionID },{bookCart:{"abcs1321":1}});
     db.get('session')
     .find({ id : sessionID })
     .set('bookCart.' + bookID, 1)
@@ -66,13 +76,15 @@ module.exports = {
     res.redirect('back');
   },
 
-  cart: (req, res) =>{
+  cart: async (req, res) =>{
+    var session1 = await Session.find({id: req.signedCookies.sessionID})
     res.render('books/cart',{
     books: db.get('books').value(),
     bookCart: db.get('session')
                .find({id : req.signedCookies.sessionID})
                .get('bookCart')
-               .value()
+               .value(),
+    bookCartMD: session1[0]._doc.bookCart
     })
   },
 

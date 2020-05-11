@@ -4,16 +4,19 @@
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 require('dotenv').config()
-console.log(process.env.SESSION_SECRET)
+
 const express = require('express');
 const app = express();
-
+var session = require('express-session')
+var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_LOCAL_URL);
 var bodyParser = require('body-parser');
 var shortid = require('shortid');
 var cookieParser = require('cookie-parser')
 const port = 3000;
+var session = require('express-session')
+var MongoStore = require('connect-mongo')(session);
 
 var booksRoute = require('./routes/books.route');
 var userRoute = require('./routes/user.route');
@@ -23,6 +26,7 @@ var authRoute = require('./routes/auth.route')
 var cartRoute = require('./routes/cart.route')
 var apiProductsRoute = require('./api/routes/products.route')
 var apiLogin = require('./api/routes/login.route')
+var apiTransaction = require('./api/routes/transactions.route')
 
 var authMiddle = require('./middlewares/auth.middleware')
 var sessionMiddle = require('./middlewares/session.middleware')
@@ -37,8 +41,18 @@ app.set('views', './views');
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+app.use(session({
+  secret: 'qwerty1989',
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 1 day
+}))
 
-
+app.use(function(req,res,next){
+   res.locals.session=req.session;
+   next();
+})
 // https://expressjs.com/en/starter/basic-routing.html
 app.get('/',authMiddle.requireAuth,cookieCount, (request, response) => {
   response.cookie("CodersX",123);
@@ -49,6 +63,7 @@ var countCookie=0;
 function cookieCount(req,res,next){
   countCookie++;
   console.log(req.cookies,":",countCookie);
+  console.log(req.signedCookies.userID,":",countCookie);
   next();
 }
 app.use('/auth', authRoute);
@@ -59,6 +74,7 @@ app.use('/transactions',authMiddle.requireAuth, transRoute);
 app.use('/cart', cartRoute);
 app.use('/api/products', apiProductsRoute);
 app.use('/api/login', apiLogin);
+app.use('/api/transactions', apiTransaction);
 // listen for requests :)
 app.listen(port, () => {
   console.log("Server listening on port " + port);

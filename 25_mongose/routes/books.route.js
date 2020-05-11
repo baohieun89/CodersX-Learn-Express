@@ -2,11 +2,10 @@ const express = require('express');
 var multer  = require('multer');
 
 
-var bodyParser = require('body-parser');
+
 var controller = require('../controllers/books.controller')
 var router = express.Router();
-router.use(express.json()) // for parsing application/json
-router.use(express.urlencoded({ extended: true }))
+
 var upload = multer({ dest: './public/images/covers' })
 
 

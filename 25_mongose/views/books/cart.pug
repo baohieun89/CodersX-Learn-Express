@@ -11,4 +11,13 @@ block content
 					tr
 						td= key
 						td= val
+		if bookCartMD
+			table.table
+				tr
+					th Product
+					th Qty
+				each val, key in bookCartMD
+					tr
+						td= key
+						td= val
 	a.btn.btn-dark.col-6(href="/books/cart/lend") LEND

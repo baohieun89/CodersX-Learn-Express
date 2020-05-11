@@ -2,7 +2,7 @@ var Product = require('../models/product.model')
 var shortid = require('shortid');
 
 module.exports.index = async (req, res, next) => {
-	// var page = parseInt(req.query.page) || 1; 
+	// var page = parseInt(req.query.page) || 1;
 	// var perPage = 8;
 	// var start = (page -1 ) * perPage;
 	// var end = page * perPage;
